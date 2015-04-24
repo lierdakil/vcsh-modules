@@ -9,3 +9,19 @@ MODULES="$BASE/.gitmodules"
 if git ls-files --error-unmatch "$MODULES" >/dev/null 2>&1; then
 	git mv -f "$MODULES" "$NEW_MODULES"
 fi
+
+cat > "$GIT_DIR/hooks/post-merge" <<EOF
+#!/bin/bash
+
+if [ -f .gitmodules ]; then
+	oldmodules="\$(cat .gitmodules)"
+	rm .gitmodules
+fi
+ln -s ".gitmodules.d/$VCSH_REPO_NAME" .gitmodules
+git submodule update --init
+rm .gitmodules
+
+[ -n "\$oldmodules" ] && cat > .gitmodules <<< "\$oldmodules"
+EOF
+
+chmod +x "$GIT_DIR/hooks/post-merge"
