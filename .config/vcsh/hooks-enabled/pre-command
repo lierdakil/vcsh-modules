@@ -1,6 +1,10 @@
 #!/bin/bash
 
-[ "x$VCSH_COMMAND" = "xupgrade" ] && exit 0
+case "$VCSH_COMMAND" in
+	run);;
+	enter);;
+	*) exit 0;;
+esac
 
 if [ -n "$GIT_DIR" -a -n "$VCSH_REPO_NAME" ]; then
 	BASE=$(git config core.worktree)
