@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -n "$GIT_DIR" -a -n "$VCSH_REPO_NAME" ]; then
+	BASE=$(git config core.worktree)
+	[ -z "$BASE" ] && exit 0
+	if [ -L "$BASE/.gitmodules" ]; then
+		LINK=$(readlink "$BASE/.gitmodules")
+		TGT="$BASE/.gitmodules.d/$VCSH_REPO_NAME"
+		[ "x$LINK" == "x$TGT" ] && rm "$BASE/.gitmodules"
+	fi
+fi

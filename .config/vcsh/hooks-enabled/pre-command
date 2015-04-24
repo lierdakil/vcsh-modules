@@ -1,0 +1,10 @@
+#!/bin/bash
+
+[ "x$VCSH_COMMAND" = "xupgrade" ] && exit 0
+
+if [ -n "$GIT_DIR" -a -n "$VCSH_REPO_NAME" ]; then
+	BASE=$(git config core.worktree)
+	[ -z "$BASE" ] && exit 0
+	[ -e "$BASE/.gitmodules" ] || \
+		ln -s "$BASE/.gitmodules.d/$VCSH_REPO_NAME" "$BASE/.gitmodules"
+fi
