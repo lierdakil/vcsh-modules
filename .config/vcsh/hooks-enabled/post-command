@@ -3,9 +3,16 @@
 if [ -n "$GIT_DIR" -a -n "$VCSH_REPO_NAME" ]; then
 	BASE=$(git config core.worktree)
 	[ -z "$BASE" ] && exit 0
-	if [ -L "$BASE/.gitmodules" ]; then
-		LINK=$(readlink "$BASE/.gitmodules")
+	MODULES="$BASE/.gitmodules"
+	if [ -L "$MODULES" ]; then
+		LINK=$(readlink "$MODULES")
 		TGT="$BASE/.gitmodules.d/$VCSH_REPO_NAME"
-		[ "x$LINK" == "x$TGT" ] && rm "$BASE/.gitmodules"
+		if [ "x$LINK" == "x$TGT" ]; then
+			if git ls-files --error-unmatch "$MODULES" >/dev/null 2>&1; then
+				git rm "$MODULES"
+			else
+				rm "$MODULES"
+			fi
+		fi
 	fi
 fi
