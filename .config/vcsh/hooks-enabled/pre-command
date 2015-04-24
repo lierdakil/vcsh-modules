@@ -9,6 +9,8 @@ esac
 if [ -n "$GIT_DIR" -a -n "$VCSH_REPO_NAME" ]; then
 	BASE=$(git config core.worktree)
 	[ -z "$BASE" ] && exit 0
+	MODULES="$BASE/.gitmodules.d/$VCSH_REPO_NAME"
+	[ -e "$MODULES" ] || touch "$MODULES"
 	[ -e "$BASE/.gitmodules" ] || \
-		ln -s "$BASE/.gitmodules.d/$VCSH_REPO_NAME" "$BASE/.gitmodules"
+		ln -s "$MODULES" "$BASE/.gitmodules"
 fi
