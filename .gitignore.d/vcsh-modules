@@ -1,8 +1,0 @@
-*
-!/.config
-!/.config/vcsh
-!/.config/vcsh/config
-!/.config/vcsh/gitmodules
-!/.config/vcsh/gitmodules/git-submodule
-!/.gitignore.d
-!/.gitignore.d/vcsh-modules
