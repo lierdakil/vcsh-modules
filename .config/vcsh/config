@@ -1,0 +1,7 @@
+#!/bin/bash
+
+: ${XDG_CONFIG_HOME:="$HOME/.config"}
+
+EXEC_PATH="$(git --exec-path)"
+export GIT_EXEC_PATH_ORIG="${EXEC_PATH##*:}"
+export GIT_EXEC_PATH="$XDG_CONFIG_HOME/vcsh/gitmodules:$EXEC_PATH"

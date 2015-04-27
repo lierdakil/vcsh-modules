@@ -1,7 +1,0 @@
-*
-!/.config
-!/.config/vcsh
-!/.config/vcsh/hooks-enabled
-!/.config/vcsh/hooks-enabled/post-command
-!/.config/vcsh/hooks-enabled/post-upgrade
-!/.config/vcsh/hooks-enabled/pre-command
