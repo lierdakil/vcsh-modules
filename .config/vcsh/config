@@ -5,6 +5,6 @@
 EXEC_PATH="$(git --exec-path)"
 export GIT_EXEC_PATH_ORIG="${EXEC_PATH##*:}"
 NEWPATH="$XDG_CONFIG_HOME/vcsh/gitmodules"
-if ! [[ "$EXEC_PATH" =~ ^(.*:)?"$NEWPATH"(:.*)?$ ]]; then
+if ! [[ "$EXEC_PATH" == *"${NEWPATH}:"* ]]; then
 	export GIT_EXEC_PATH="$NEWPATH:$EXEC_PATH"
 fi
