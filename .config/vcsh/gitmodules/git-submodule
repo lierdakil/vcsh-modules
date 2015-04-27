@@ -1,7 +1,9 @@
 #!/bin/bash
 
-GITMODULES=".gitmodules.d/$VCSH_REPO_NAME"
-#[ ! -f "$GITMODULES" ] && GITMODULES=".gitmodules"
-export GITMODULES
+_gitmodules() {
+	local GITMODULES=".gitmodules.d/$VCSH_REPO_NAME"
+	[ ! -f "$GITMODULES" -a -f ".gitmodules" ] && GITMODULES=".gitmodules"
+	echo -n "$GITMODULES"
+}
 
-eval "$(cat "$GIT_EXEC_PATH_ORIG/git-submodule" | sed 's/\.gitmodules/"$GITMODULES"/g')"
+eval "$(cat "$GIT_EXEC_PATH_ORIG/git-submodule" | sed 's/\.gitmodules/"$(_gitmodules)"/g')"
