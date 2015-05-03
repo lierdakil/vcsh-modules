@@ -1,0 +1,9 @@
+*
+!/.config
+!/.config/mr
+!/.config/mr/available.d
+!/.config/mr/available.d/vcsh-modules.vcsh
+!/.config/vcsh
+!/.config/vcsh/config
+!/.config/vcsh/gitmodules
+!/.config/vcsh/gitmodules/git-submodule
