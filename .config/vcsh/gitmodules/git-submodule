@@ -6,4 +6,6 @@ _gitmodules() {
 	echo -n "$GITMODULES"
 }
 
+[ -d .gitmodules.d ] || mkdir .gitmodules.d
+
 eval "$(cat "$GIT_EXEC_PATH_ORIG/git-submodule" | sed 's/\.gitmodules/"$(_gitmodules)"/g')"
