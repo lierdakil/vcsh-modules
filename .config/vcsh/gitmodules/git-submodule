@@ -1,16 +1,12 @@
 #!/bin/bash
 
-_gitmodules() {
-	local GITMODULES=".gitmodules.d/$VCSH_REPO_NAME"
-	[ ! -f "$GITMODULES" -a -f ".gitmodules" ] && GITMODULES=".gitmodules"
-	echo "$GITMODULES" >&2
-	echo -n "$GITMODULES"
-}
-
 [ -d .gitmodules.d ] || mkdir .gitmodules.d
 
-ln -s "$(_gitmodules)" .gitmodules
+GITMODULES=".gitmodules.d/$VCSH_REPO_NAME"
+[ ! -f "$GITMODULES" -a -f ".gitmodules" ] && GITMODULES=".gitmodules"
+
+[[ "$GITMODULES" != ".gitmodules" ]] && ln -s "$(_gitmodules)" .gitmodules
 
 "$GIT_EXEC_PATH_ORIG/git-submodule" "$@"
 
-rm .gitmodules
+[[ "$GITMODULES" != ".gitmodules" ]] && rm .gitmodules
