@@ -5,11 +5,17 @@
 GITMODULES=".gitmodules.d/$VCSH_REPO_NAME"
 [ ! -f "$GITMODULES" -a -f ".gitmodules" ] && GITMODULES=".gitmodules"
 
-echo $GITMODULES
-readlink .gitmodules
+HOOKSO="$(dirname "$0")/hook.so"
+HOOKC="$(dirname "$0")/hook.c"
 
-[[ "$GITMODULES" != ".gitmodules" ]] && ln -s "$GITMODULES" .gitmodules && echo "added"
+if [ ! -e "$HOOKSO" -o "$HOOKC" -nt "$HOOKSO" ]; then
+    echo "Recompiling..." >&2
+    gcc -Wall -fPIC -shared -o "$HOOKSO" "$HOOKC" -ldl
+fi
+
+if [[ "$GITMODULES" != ".gitmodules" ]]; then
+    export LD_PRELOAD=$(dirname "$0")/hook.so
+    export VCSH_GITMODULES="$GITMODULES"
+fi
 
 "$GIT_EXEC_PATH_ORIG/git-submodule" "$@"
-
-[[ "$GITMODULES" != ".gitmodules" ]] && rm .gitmodules && echo "removed"
