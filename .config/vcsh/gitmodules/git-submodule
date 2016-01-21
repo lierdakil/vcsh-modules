@@ -5,6 +5,9 @@
 GITMODULES=".gitmodules.d/$VCSH_REPO_NAME"
 [ ! -f "$GITMODULES" -a -f ".gitmodules" ] && GITMODULES=".gitmodules"
 
+echo $GITMODULES
+readlink .gitmodules
+
 [[ "$GITMODULES" != ".gitmodules" ]] && ln -s "$GITMODULES" .gitmodules
 
 "$GIT_EXEC_PATH_ORIG/git-submodule" "$@"
