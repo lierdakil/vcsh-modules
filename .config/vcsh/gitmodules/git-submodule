@@ -8,8 +8,8 @@ GITMODULES=".gitmodules.d/$VCSH_REPO_NAME"
 echo $GITMODULES
 readlink .gitmodules
 
-[[ "$GITMODULES" != ".gitmodules" ]] && ln -s "$GITMODULES" .gitmodules
+[[ "$GITMODULES" != ".gitmodules" ]] && ln -s "$GITMODULES" .gitmodules && echo "added"
 
 "$GIT_EXEC_PATH_ORIG/git-submodule" "$@"
 
-[[ "$GITMODULES" != ".gitmodules" ]] && rm .gitmodules
+[[ "$GITMODULES" != ".gitmodules" ]] && rm .gitmodules && echo "removed"
