@@ -18,4 +18,4 @@ if [[ "$GITMODULES" != ".gitmodules" ]]; then
     export VCSH_GITMODULES="$GITMODULES"
 fi
 
-"$GIT_EXEC_PATH_ORIG/git-submodule" "$@"
+eval "$(sed 's/\.gitmodules/"$GITMODULES"/g' "$GIT_EXEC_PATH_ORIG/git-submodule")"
