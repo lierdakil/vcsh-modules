@@ -7,5 +7,5 @@ export GIT_EXEC_PATH_ORIG="${EXEC_PATH##*:}"
 NEWPATH="$XDG_CONFIG_HOME/vcsh/gitmodules"
 case "$EXEC_PATH" in
 	*"${NEWPATH}:"*);;
-	*) export GIT_EXEC_PATH="$NEWPATH:$EXEC_PATH";;
+	*) export GIT_EXEC_PATH="$EXEC_PATH";;
 esac
