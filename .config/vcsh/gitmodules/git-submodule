@@ -4,8 +4,8 @@ if [ -e ".gitmodules" ]; then
     echo ".gitmodules exists"
     exit 2
 else
-    PATH="${GIT_ORIG_EXEC_PATH}:${PATH}"
-    GIT_EXEC_PATH="${GIT_ORIG_EXEC_PATH}"
+    PATH="${GIT_EXEC_PATH_ORIG}:${PATH}"
+    GIT_EXEC_PATH="${GIT_EXEC_PATH_ORIG}"
     mpath="${VCSH_MODULES_PATH}/${VCSH_REPO_NAME}"
-    eval "$(sed "s/.gitmodules/\"${mpath}\"/g" "${GIT_ORIG_EXEC_PATH}/git-submodule")"
+    eval "$(sed "s/.gitmodules/\"${mpath}\"/g" "${GIT_EXEC_PATH_ORIG}/git-submodule")"
 fi
