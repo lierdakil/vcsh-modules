@@ -6,16 +6,6 @@ if [ -e ".gitmodules" ]; then
 else
     PATH="${GIT_ORIG_EXEC_PATH}:${PATH}"
     GIT_EXEC_PATH="${GIT_ORIG_EXEC_PATH}"
-    mdir="${VCSH_BASE:-$HOME}/.gitmodules.d"
-    mpath="${mdir}/${VCSH_REPO_NAME}"
-    [ -d "${mdir}" ] || mkdir -p "${mdir}"
-    [ -r "${mpath}" ] || touch "${mpath}"
-    ln -s "${mpath}" ".gitmodules" || exit 2
-    "${GIT_ORIG_EXEC_PATH}/git-submodule" "$@"
-    if [ "$1" = "add" ]; then
-        git rm --force --quiet .gitmodules
-	git add --force "${mpath}"
-    else
-	rm .gitmodules
-    fi
+    mpath="${VCSH_MODULES_PATH}/${VCSH_REPO_NAME}"
+    eval "$(sed "s/.gitmodules/\"${mpath}\"/g" "${GIT_ORIG_EXEC_PATH}/git-submodule")"
 fi

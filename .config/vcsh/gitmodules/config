@@ -5,4 +5,6 @@ ROOT="$XDG_CONFIG_HOME/vcsh/gitmodules"
 if [ ! -f .gitmodules ]; then
     export GIT_ORIG_EXEC_PATH="$(git --exec-path)"
     export GIT_EXEC_PATH="$ROOT"
+    export VCSH_MODULES_PATH=${VCSH_MODULES_PATH:-"${VCSH_BASE:-$HOME}/.gitmodules.d"}
+    [ -d "${VCSH_MODULES_PATH}" ] || mkdir -p "${VCSH_MODULES_PATH}"
 fi
