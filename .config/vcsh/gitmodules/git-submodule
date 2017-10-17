@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ -e ".gitmodules" ]; then
+    echo ".gitmodules exists"
+    exit 2
+else
+    PATH="${GIT_ORIG_EXEC_PATH}:${PATH}"
+    GIT_EXEC_PATH="${GIT_ORIG_EXEC_PATH}"
+    mdir="${VCSH_BASE:-$HOME}/.gitmodules.d"
+    mpath="${mdir}/${VCSH_REPO_NAME}"
+    [ -d "${mdir}" ] || mkdir -p "${mdir}"
+    [ -r "${mpath}" ] || touch "${mpath}"
+    ln -s "${mpath}" ".gitmodules" || exit 2
+    "${GIT_ORIG_EXEC_PATH}/git-submodule" "$@"
+    rm .gitmodules
+fi

@@ -1,13 +1,8 @@
 #!/bin/bash
 
 ROOT="$XDG_CONFIG_HOME/vcsh/gitmodules"
-HOOKSO="$ROOT/hook.so"
-HOOKC="$ROOT/hook.c"
-if [ ! -e "$HOOKSO" -o "$HOOKC" -nt "$HOOKSO" ]; then
-    echo "Recompiling submodule hook..." >&2
-    gcc -Wall -fPIC -shared -o "$HOOKSO" "$HOOKC" -ldl
-fi
 
 if [ ! -f .gitmodules ]; then
-    export LD_PRELOAD="$HOOKSO"
+    export GIT_ORIG_EXEC_PATH="$(git --exec-path)"
+    export GIT_EXEC_PATH="$ROOT"
 fi
