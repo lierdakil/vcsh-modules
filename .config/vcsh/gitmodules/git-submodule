@@ -12,5 +12,10 @@ else
     [ -r "${mpath}" ] || touch "${mpath}"
     ln -s "${mpath}" ".gitmodules" || exit 2
     "${GIT_ORIG_EXEC_PATH}/git-submodule" "$@"
-    rm .gitmodules
+    if [ "$1" = "add" ]; then
+        git rm --force --quiet .gitmodules
+	git add --force "${mpath}"
+    else
+	rm .gitmodules
+    fi
 fi
