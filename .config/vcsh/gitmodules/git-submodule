@@ -7,7 +7,7 @@ else
     GIT_EXEC_PATH="${GIT_EXEC_PATH_ORIG}"
     mpath="${VCSH_MODULES_PATH}/${VCSH_REPO_NAME}"
     [ -r "${mpath}" ] || touch "${mpath}"
-    ln -s "${mpath}" ".gitmodules" || exit 2
+    ln "${mpath}" ".gitmodules" || exit 2
     "${GIT_EXEC_PATH_ORIG}/git-submodule" "$@"
     if git ls-files --error-unmatch .gitmodules >/dev/null 2>&1; then
 	git rm --force --quiet .gitmodules
