@@ -1,0 +1,7 @@
+#!/bin/bash
+
+saved_git_exec_path="$GIT_EXEC_PATH"
+GIT_EXEC_PATH="${GIT_EXEC_PATH_ORIG}"
+source "${GIT_EXEC_PATH_ORIG}/git-sh-setup" "$@"
+GIT_EXEC_PATH="$saved_git_exec_path"
+unset saved_git_exec_path
