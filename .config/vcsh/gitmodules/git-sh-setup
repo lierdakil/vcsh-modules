@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 saved_git_exec_path="$GIT_EXEC_PATH"
 GIT_EXEC_PATH="${GIT_EXEC_PATH_ORIG}"
