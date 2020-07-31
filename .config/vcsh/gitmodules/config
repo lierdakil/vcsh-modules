@@ -1,13 +1,12 @@
-#!/usr/bin/env bash
-
 if [ ! -f .gitmodules ]; then
     EXEC_PATH="$(git --exec-path)"
-    export GIT_EXEC_PATH_ORIG="${EXEC_PATH##*:}"
+    export GIT_EXEC_PATH_ORIG="${GIT_EXEC_PATH_ORIG:-$EXEC_PATH}"
     NEWPATH="$XDG_CONFIG_HOME/vcsh/gitmodules"
-    case "$EXEC_PATH" in
-	*"${NEWPATH}:"*);;
-	*) export GIT_EXEC_PATH="$NEWPATH:$EXEC_PATH";;
+    case ":$EXEC_PATH" in
+        *":${NEWPATH}:"*);;
+        *) export GIT_EXEC_PATH="$NEWPATH:$EXEC_PATH";;
     esac
     export VCSH_MODULES_PATH="${VCSH_MODULES_PATH:-"${VCSH_BASE:-$HOME}/.gitmodules.d"}"
     [ -d "${VCSH_MODULES_PATH}" ] || mkdir -p "${VCSH_MODULES_PATH}"
+    unset EXEC_PATH NEWPATH
 fi

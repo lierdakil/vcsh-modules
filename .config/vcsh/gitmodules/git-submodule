@@ -4,15 +4,16 @@ if [ -e ".gitmodules" ]; then
     echo ".gitmodules exists"
     exit 2
 else
-    GIT_EXEC_PATH="${GIT_EXEC_PATH_ORIG}"
     mpath="${VCSH_MODULES_PATH}/${VCSH_REPO_NAME}"
     [ -r "${mpath}" ] || touch "${mpath}"
     ln "${mpath}" ".gitmodules" || exit 2
-    "${GIT_EXEC_PATH_ORIG}/git-submodule" "$@"
+    GIT_EXEC_PATH="${GIT_EXEC_PATH_ORIG}" git submodule "$@"
+    result=$?
     if git ls-files --error-unmatch .gitmodules >/dev/null 2>&1; then
-	git rm --force --quiet .gitmodules
-	git add --force "${mpath}"
+        git rm --force --quiet .gitmodules
+        git add --force "${mpath}"
     else
-	rm .gitmodules
+        rm .gitmodules
     fi
+    exit $result
 fi

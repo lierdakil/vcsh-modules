@@ -1,5 +1,3 @@
-#!/bin/bash
-
 : ${XDG_CONFIG_HOME:="$HOME/.config"}
 
 source "$XDG_CONFIG_HOME/vcsh/gitmodules/config"

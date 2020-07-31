@@ -1,7 +1,16 @@
-#!/usr/bin/env bash
-
-saved_git_exec_path="$GIT_EXEC_PATH"
-GIT_EXEC_PATH="${GIT_EXEC_PATH_ORIG}"
-source "${GIT_EXEC_PATH_ORIG}/git-sh-setup" "$@"
-GIT_EXEC_PATH="$saved_git_exec_path"
-unset saved_git_exec_path
+# This script removes GIT_EXEC_PATH override for git-sh-setup invocations
+# It will be sourced by various git commands
+IFS=":" read -a patharr <<< "$GIT_EXEC_PATH_ORIG"
+sourced=""
+for i in "${patharr[@]}"; do
+    if [ -r "$i/git-sh-setup" ]; then
+        GIT_EXEC_PATH="$GIT_EXEC_PATH_ORIG" source "$i/git-sh-setup" "$@"
+        sourced="ok"
+        break
+    fi
+done
+if [ -z "$sourced" ]; then
+    echo "git-sh-setup not found in $GIT_EXEC_PATH_ORIG"
+    exit 127
+fi
+unset patharr sourced
