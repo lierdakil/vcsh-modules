@@ -1,0 +1,6 @@
+*
+!/.config
+!/.config/vcsh
+!/.config/vcsh/config
+!/.config/vcsh/gitmodules
+!/.config/vcsh/gitmodules/**/*
